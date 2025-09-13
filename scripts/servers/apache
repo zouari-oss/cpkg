@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# =======================================================================
+# .FILE
+#   apache
+#
+# .SYNOPSIS
+#   Manage Apache (httpd) and PHP-FPM services
+#
+# .DESCRIPTION
+#   A simple helper script to start, stop, restart, or check the status
+#   of both the Apache (httpd) and PHP-FPM services using systemctl.
+#
+# .PARAMETER <start|stop|restart|status>
+#   A single command-line argument to control the services.
+#
+# .INPUTS
+#   Accepts one positional argument from the user.
+#
+# .OUTPUTS
+#   Outputs service status messages and errors to the terminal.
+#
+# .NOTES
+#   Version       : 1.0
+#   Author        : @ZouariOmar <zouariomar20@gmail.com>
+#   Created       : 2025-09-13
+#   Change Log    : Initial version
+#
+# .EXAMPLE
+#   ./apache.sh start
+#   ./apache.sh stop
+#   ./apache.sh restart
+#   ./apache.sh status
+# =======================================================================
+
+[[ -s ~/.bash_colors ]] && source "$HOME/.bash_colors"
+
+VALID_COMMANDS=("start" "stop" "restart" "status")
+
+usage() {
+  echo -e "${YELLOW}[USAGE]${RESET} ./apache <start|stop|restart|status>\n"
+}
+
+if [ -z "$1" ]; then
+  echo -e "${RED}[ERROR]${RESET} No argument provided.\n"
+  usage
+  exit 1
+fi
+
+if [[ ! " ${VALID_COMMANDS[*]} " =~ $1 ]]; then
+  echo -e "${RED}[ERROR]${RESET} Invalid argument: '$1'\n"
+  usage
+  exit 1
+fi
+
+echo -e "${GREEN}[INFO]${RESET} Running '${1}' on Apache (httpd) and PHP-FPM..."
+sudo systemctl "$1" httpd || echo -e "${RED}[ERROR]${RESET} Failed to ${1} Apache (httpd)"
+sudo systemctl "$1" php-fpm || echo -e "${RED}[ERROR]${RESET} Failed to ${1} PHP-FPM"
