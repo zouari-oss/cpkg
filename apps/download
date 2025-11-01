@@ -43,10 +43,12 @@ help() {
       download apps larger than 100MB
     [DESCRIPTION]
       You can download:
-        - MPLABX-v6.20-linux-downloader.tar -- ./download mplabx
-        - Proteus 8.13 SP0 Pro.zip          -- ./download proteus
-        - PS2 Games                         -- ./download ps2
-        - PCSX2-v2.4.0                      -- ./download pcsx2
+        - MPLABX-v6.20-linux-downloader.tar                 -- ./download mplabx
+        - Proteus 8.13 SP0 Pro.zip                          -- ./download proteus
+        - PS2 Games                                         -- ./download ps2
+        - PCSX2-v2.4.0                                      -- ./download pcsx2
+        - Netacad Resource Hub (e.g Cisco Packet Tracer..)  -- ./download netcad
+        - Counter-Strike 1.6                                -- ./download cs1.6
     [AUTHOR]
       @ZouariOmar (zouariomar20@gmail.com)
     [CREATED]
@@ -90,6 +92,18 @@ download_pcsx2() {
   wget https://github.com/PCSX2/pcsx2/releases/download/v2.4.0/pcsx2-v2.4.0-linux-appimage-x64-Qt.AppImage
 }
 
+download_netcad_resource_hub() {
+  echo -e """
+  [LINK00] Resource Hub -- https://www.netacad.com/resources/lab-downloads?courseLang=en-US
+  """
+  exit $EXIT_SUCCES
+}
+
+download_cs() {
+  wget https://csdownload.net/?download_file=https://cstrike.csdownload.net/cstrike2025.exe || exit $EXIT_FAILED
+  exit $EXIT_SUCCES
+}
+
 case $app_name in
 "mplabx")
   download_mplabx
@@ -102,6 +116,12 @@ case $app_name in
   ;;
 "pcsx2")
   download_pcsx2
+  ;;
+"netcad")
+  download_netcad_resource_hub
+  ;;
+"cs1.6")
+  download_cs
   ;;
 *)
   help
