@@ -1,0 +1,47 @@
+{
+  "name": "Crun Stacks",
+  "url": "https://github.com/ZouariOmar/cpkg/raw/main/crun/crun_stacks.json",
+  "description": "A package contain many starter projects",
+  "version": "1.0.0",
+  "size": 1024,
+  "lastUpdated": "2025-11-15",
+  "languages": [
+    "cx",
+    "cxx",
+    "java",
+    "xml"
+  ],
+  "stacks": {
+    "cx": [
+      {
+        "name": "CXCodePracticeEnv",
+        "description": "Environment for practicing CX problems",
+        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/cx/CXCodePracticeEnv.zip"
+      },
+      {
+        "name": "CXContestEnv",
+        "description": "Environment for practicing CX coding contests",
+        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/cx/CXContestEnv.zip"
+      }
+    ],
+    "cxx": [],
+    "java": [
+      {
+        "name": "JavaCodePracticeEnv",
+        "description": "Environment for practicing java problems",
+        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/java/JavaCodePracticeEnv.zip"
+      },
+      {
+        "name": "JavaCodePracticeEnv",
+        "description": "Environment for practicing java coding contests",
+        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/java/JavaContestEnv.zip"
+      },
+      {
+        "name": "JavaProjectEnv",
+        "description": "Environment for making java project (with maven)",
+        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/java/JavaProjectEnv.zip"
+      }
+    ],
+    "xml": []
+  }
+}
