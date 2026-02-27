@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    pom.xml
+
+    MODULE_NAME pom file
+
+    @author @example <example@example.com>
+    @version 1.0.0
+    @since YYYY-MM-DD
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- Super POM Inheritance -->
+  <parent>
+    <groupId>com.mycompany</groupId>
+    <artifactId>super-pom</artifactId>
+    <version>1.0.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <!-- Module Coordinates -->
+  <artifactId>my-module</artifactId>
+  <version>1.0.0</version> <!-- Optional if inherited -->
+  <packaging>jar</packaging>
+  <name>My Module</name>
+  <description>Handles [module responsibility] within the application.</description>
+  <url>https://example.com/my-module</url>
+
+  <!-- SCM Info (override or inherit) -->
+  <scm>
+    <connection>scm:git:git://example.com/mycompany/my-module.git</connection>
+    <developerConnection>scm:git:ssh://git@example.com/mycompany/my-module.git</developerConnection>
+    <url>https://example.com/mycompany/my-module</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <!-- Developers (can override or inherit) -->
+  <developers>
+    <developer>
+      <id>dev01</id>
+      <name>Jane Developer</name>
+      <email>jane@example.com</email>
+      <organization>MyCompany</organization>
+      <organizationUrl>https://example.com</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <!-- Licensing -->
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <!-- Dependencies -->
+  <dependencies>
+    <!-- Example: Logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.9</version>
+    </dependency>
+
+    <!-- Example: JUnit for Testing -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.10.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <!-- Build Configuration -->
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+    </resources>
+
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+      </testResource>
+    </testResources>
+
+    <!-- Optional: Add module-specific plugins -->
+    <plugins>
+      <!-- Example: Shade Plugin if module is deployable -->
+      <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.mycompany.mymodule.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+    </plugins>
+  </build>
+
+  <!-- Optional: Profiles -->
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <properties>
+        <env>development</env>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+  </profiles>
+
+  <!-- Optional: Distribution Management (for deployable modules) -->
+  <!--
+    <distributionManagement>
+        <repository>
+            <id>internal-repo</id>
+            <url>https://repo.example.com/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>internal-snapshots</id>
+            <url>https://repo.example.com/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    -->
+
+</project>

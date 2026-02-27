@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    pom.xml
+
+    Super POM
+
+    @author @exemple <exemple@exemple.com>
+    @version 1.0.0
+    @since YYYY-MM-DD
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mycompany</groupId>
+  <artifactId>super-pom</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>Super Parent POM</name>
+  <description>Centralized configuration for all MyCompany Maven projects</description>
+  <url>https://example.com/super-pom</url>
+
+  <!-- Properties -->
+  <properties>
+    <java.version>17</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- Plugin Versions -->
+    <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+    <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+    <maven.jar.plugin.version>3.3.0</maven.jar.plugin.version>
+    <maven.source.plugin.version>3.3.0</maven.source.plugin.version>
+    <maven.javadoc.plugin.version>3.6.0</maven.javadoc.plugin.version>
+  </properties>
+
+  <!-- Developers -->
+  <developers>
+    <developer>
+      <id>dev01</id>
+      <name>Jane Developer</name>
+      <email>jane@example.com</email>
+      <url>https://example.com/jane</url>
+      <organization>MyCompany</organization>
+      <organizationUrl>https://example.com</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>maintainer</role>
+      </roles>
+    </developer>
+    <developer>
+      <id>dev02</id>
+      <name>John Developer</name>
+      <email>john@example.com</email>
+      <url>https://example.com/john</url>
+      <organization>MyCompany</organization>
+      <organizationUrl>https://example.com</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <!-- SCM (Optional) -->
+  <scm>
+    <connection>scm:git:https://example.com/mycompany/super-pom.git</connection>
+    <developerConnection>scm:git:ssh://git@example.com/mycompany/super-pom.git</developerConnection>
+    <url>https://example.com/mycompany/super-pom</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <!-- License (Optional but recommended) -->
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <!-- Modules (for multi-module projects) -->
+  <modules>
+    <module>core</module>
+    <module>api</module>
+    <module>web</module>
+  </modules>
+
+  <!-- Dependency Management -->
+  <dependencyManagement>
+    <dependencies>
+      <!-- Define shared dependencies (with versions) for children -->
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- Plugin Management -->
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Compiler Plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven.compiler.plugin.version}</version>
+          <configuration>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+        </plugin>
+
+        <!-- JAR Plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven.jar.plugin.version}</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <!-- Source Plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven.source.plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Javadoc Plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven.javadoc.plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-javadocs</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Surefire Plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven.surefire.plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
