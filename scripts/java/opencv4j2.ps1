@@ -1,6 +1,6 @@
 <#
 .FILE
-    opencv4j2.psl
+    opencv4j2.ps1
 
 .SYNOPSIS
     PowerShell OpenCV Java Build & Install Script
