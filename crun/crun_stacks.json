@@ -3,7 +3,7 @@
   "url": "https://github.com/zouari-oss/cpkg/raw/main/crun/crun_stacks.json",
   "description": "A package contain many starter projects",
   "version": "1.0.1",
-  "size": "1.7 KB",
+  "size": "3.4 KB",
   "lastUpdated": "2026-03-19",
   "languages": [
     "cx",
@@ -48,19 +48,19 @@
     ],
     "java": [
       {
-        "name": "JavaCodePracticeEnv",
+        "name": "java-code-practice-env",
         "description": "Environment for practicing java problems",
-        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/JavaCodePracticeEnv.zip"
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/java-code-practice-env.zip"
       },
       {
-        "name": "JavaCodePracticeEnv",
+        "name": "java-contest-env",
         "description": "Environment for practicing java coding contests",
-        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/JavaContestEnv.zip"
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/java-contest-env.zip"
       },
       {
-        "name": "JavaProjectEnv",
+        "name": "java-project-env",
         "description": "Environment for making java project (with maven)",
-        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/JavaProjectEnv.zip"
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/java-project-env.zip"
       }
     ],
     "git": [
