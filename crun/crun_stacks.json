@@ -1,10 +1,10 @@
 {
   "name": "Crun Stacks",
-  "url": "https://github.com/ZouariOmar/cpkg/raw/main/crun/crun_stacks.json",
+  "url": "https://github.com/zouari-oss/cpkg/raw/main/crun/crun_stacks.json",
   "description": "A package contain many starter projects",
-  "version": "1.0.0",
-  "size": 1024,
-  "lastUpdated": "2025-11-15",
+  "version": "1.0.1",
+  "size": "1.7 KB",
+  "lastUpdated": "2026-03-19",
   "languages": [
     "cx",
     "cxx",
@@ -14,34 +14,83 @@
   "stacks": {
     "cx": [
       {
-        "name": "CXCodePracticeEnv",
+        "name": "cx-code-practice-env",
         "description": "Environment for practicing CX problems",
-        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/cx/CXCodePracticeEnv.zip"
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/cx/cx-code-practice-env.zip"
       },
       {
-        "name": "CXContestEnv",
+        "name": "cx-contest-env",
         "description": "Environment for practicing CX coding contests",
-        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/cx/CXContestEnv.zip"
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/cx/cx-contest-env.zip"
+      },
+      {
+        "name": "cx-project-env",
+        "description": "Environment for making CX project",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/cx/cx-project-env.zip"
       }
     ],
-    "cxx": [],
+    "cxx": [
+      {
+        "name": "cxx-code-practice-env",
+        "description": "Environment for practicing CXX problems",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/cxx/cxx-code-practice-env.zip"
+      },
+      {
+        "name": "cxx-contest-env",
+        "description": "Environment for practicing CXX coding contests",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/cxx/cxx-contest-env.zip"
+      },
+      {
+        "name": "cxx-project-env",
+        "description": "Environment for making CXX project",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/cxx/cxx-project-env.zip"
+      }
+    ],
     "java": [
       {
         "name": "JavaCodePracticeEnv",
         "description": "Environment for practicing java problems",
-        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/java/JavaCodePracticeEnv.zip"
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/JavaCodePracticeEnv.zip"
       },
       {
         "name": "JavaCodePracticeEnv",
         "description": "Environment for practicing java coding contests",
-        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/java/JavaContestEnv.zip"
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/JavaContestEnv.zip"
       },
       {
         "name": "JavaProjectEnv",
         "description": "Environment for making java project (with maven)",
-        "url": "https://github.com/ZouariOmar/cpkg/raw/main/templates/java/JavaProjectEnv.zip"
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/JavaProjectEnv.zip"
       }
     ],
-    "xml": []
+    "git": [
+      {
+        "name": ".java-gitignore",
+        "description": "Java custom .gitignore template",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/git/.java-gitignore"
+      }
+    ],
+    "xml": [
+      {
+        "name": "module-pom.xml",
+        "description": "Child POM template",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/xml/module-pom.xml"
+      },
+      {
+        "name": "super-pom.xml",
+        "description": "Super POM template",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/xml/super-pom.xml"
+      },
+      {
+        "name": "log4j2.xml",
+        "description": "log4j2 configuration template",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/xml/log4j2.xml"
+      },
+      {
+        "name": "hibernate.cfg.xml",
+        "description": "hibernate configuration template",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/xml/hibernate.cfg.xml"
+      }
+    ]
   }
 }
