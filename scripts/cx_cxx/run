@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2329,SC1091
 # =========================================
 # .FILE
 #   run
@@ -25,37 +26,88 @@
 #
 # .NOTES
 #   Version       : 1.0
-#   Author        : @ZouariOmar <zouariomar20@gmail.com>
-#   Created       : 01/11/2025
-#   Change Log    : Initial version
+#   Author        : ZouariOmar <zouariomar20@gmail.com>
+#   Created       : 2025-11-01
+#   Change Log    : 347d7d6
 #
 # .EXAMPLE
 #   ./run i clean
 # =========================================
 
-# Load custom colors
-[[ -s ${HOME}/.bash/.bash_colors ]] && source "${HOME}/.bash/.bash_colors"
-
-###########################
+##########################
 ### Configuration part ###
 ##########################
-EXIT_SUCCESS=0
-EXIT_FAILED=1
-APP_NAME='lsm'
+
+APP_NAME='{{PROJECT_NAME}}'
 APP_BUILD_DIR='bin/build'
-CMAKE_LISTS_APP_DIR='conf'
+APP_VERSION='v1.0.0'
+APP_PKG_DIR="${APP_BUILD_DIR}/pkg"
+
+CMAKE_CONF_DIR='conf'
 CMAKE_GENERATOR='Ninja'
-CMAE_BUILD_BIN='ninja'
+CMAKE_BUILD_BIN='ninja'
+
+DOXYFILE_FILE_DIR="to_doxyfile_directory"
+
 TEST_BIN='ctest'
 TEST_BUILD_DIR="$APP_BUILD_DIR/test"
 
+###########################
+### !Configuration part ###
+###########################
+
+############################
+### Custom function part ###
+############################
+
+run_document() {
+  # Generate html docs
+  cd "${DOXYFILE_FILE_DIR}" && doxygen && cd ../../project || exit 1
+
+  # Ensure apidoc folder exists
+  mkdir -p "${DOXYFILE_FILE_DIR}/apidoc"
+
+  # Move new html docs into apidoc
+  if [ -d "${DOXYFILE_FILE_DIR}/html" ]; then
+    rm -rf "${DOXYFILE_FILE_DIR}/apidoc/"*
+    mv "${DOXYFILE_FILE_DIR}/html/"* "${DOXYFILE_FILE_DIR}/apidoc/"
+  else
+    echo -e "${YELLOW}[WARNING]${RESET} HTML documentation not generated!"
+  fi
+
+  # Move generated .pdf to project folder with versioned name
+  if [ -d "${DOXYFILE_FILE_DIR}/latex" ]; then
+    make -C "${DOXYFILE_FILE_DIR}/latex"
+    mv "${DOXYFILE_FILE_DIR}/latex/refman.pdf" \
+      "${DOXYFILE_FILE_DIR}/crun-cli-${APP_VERSION}.pdf"
+  else
+    echo -e "${YELLOW}[WARNING]${RESET} LaTeX/PDF documentation not generated!"
+  fi
+
+  # Clean up
+  rm -rf "${DOXYFILE_FILE_DIR}/html" "${DOXYFILE_FILE_DIR}/latex"
+}
+
+#############################
+### !Custom function part ###
+#############################
+
+#################################################################################################
+############## DON'T TOUCH THIS PART >>> ONLY IF YOU KNOW WHAT YOU’RE DOING :) <<< ##############
+#################################################################################################
+
+# Load custom colors
+[[ -s ${HOME}/.bash/.bash_colors ]] && source "${HOME}/.bash/.bash_colors"
+
 # Aliases for common commands
 declare -A COMMANDS
-COMMANDS["i"]="${CMAE_BUILD_BIN} -C ${APP_BUILD_DIR}"                                      # Interact with the builder file (e.g build.ninja, makefile)
-COMMANDS["r"]="./${APP_BUILD_DIR}/${APP_NAME}"                                             # Run App
-COMMANDS["rt"]="${TEST_BIN} --test-dir $TEST_BUILD_DIR"                                    # Run App Test(s)
-COMMANDS["rb"]="cmake -S ${CMAKE_LISTS_APP_DIR} -B ${APP_BUILD_DIR} -G ${CMAKE_GENERATOR}" # Root build
-COMMANDS["rc"]="rm -rf ${APP_BUILD_DIR}"                                                   # Root Clean
+COMMANDS["i"]="${CMAKE_BUILD_BIN} -C ${APP_BUILD_DIR}"                                # Interact with builder
+COMMANDS["r"]="./${APP_BUILD_DIR}/${APP_NAME}"                                        # Run App
+COMMANDS["rb"]="cmake -S ${CMAKE_CONF_DIR} -B ${APP_BUILD_DIR} -G ${CMAKE_GENERATOR}" # Root build
+COMMANDS["rc"]="rm -rf ${APP_BUILD_DIR}"                                              # Root Clean
+COMMANDS["rt"]="${TEST_BIN} --test-dir $TEST_BUILD_DIR"                               # Run App Test(s)
+COMMANDS["pkg"]="cpack --config ${APP_BUILD_DIR}/CPackConfig.cmake -B ${APP_PKG_DIR}" # Packaging
+COMMANDS["doc"]="run_document"                                                        # Documentation
 
 # Main func to execute shortcuts
 function run_cmd() {
@@ -67,15 +119,28 @@ function run_cmd() {
   shift
 
   if [[ -n "${COMMANDS[${key}]}" ]]; then
-    ${COMMANDS[${key}]} "$@"
-    exit ${EXIT_SUCCESS}
+    ${COMMANDS[${key}]} "$@" &&
+      exit 0 ||
+      exit 1
   fi
 
-  usage "${RED}[ERROR] Unknown shortcut ${key}${RESET}"
-  exit ${EXIT_FAILED}
+  usage "${RED}[ERROR]${RESET} Unknown shortcut ${key}!"
+  exit 1
 
 }
 
+# --------------------------------------------------------------------
+# .FUNCTION
+#   help
+# .SYNOPSIS
+#   Display usage information for the script
+# .DESCRIPTION
+#   Prints a short description, usage instructions, and author info.
+# .AUTHOR
+#   @ZouariOmar (zouariomar20@gmail.com)
+# .CREATED
+#   2025-11-01
+# --------------------------------------------------------------------
 help() {
   echo -e "${YELLOW}[FILE]${RESET}
   run
@@ -86,32 +151,46 @@ ${YELLOW}[BRIEF]${RESET}
 ${YELLOW}[USAGE]${RESET}
   ./run <command> [option]
 ${YELLOW}[OPTIONS]${RESET}
-  i           -- ${CMAE_BUILD_BIN} -C ${APP_BUILD_DIR}
-  br          -- cmake -S ${CMAKE_LISTS_APP_DIR} -B ${APP_BUILD_DIR} -G ${CMAKE_GENERATOR}
-  cr          -- rm -rf ${APP_BUILD_DIR}
+  i           -- ${CMAKE_BUILD_BIN} -C ${APP_BUILD_DIR}
   r           -- ${APP_BUILD_DIR}/${APP_NAME}
+  rb          -- cmake -S ${CMAKE_LISTS_APP_DIR} -B ${APP_BUILD_DIR} -G ${CMAKE_GENERATOR}
+  rc          -- rm -rf ${APP_BUILD_DIR}
   rt          -- ${TEST_BIN} --test-dir $TEST_BUILD_DIR
-  -h | --help -- help
+  pkg         -- cpack --config ${APP_BUILD_DIR}/CPackConfig.cmake -B ${APP_PKG_DIR}
+  doc         -- run_document() >> Documentation
+  -h | --help -- help :)
 ${YELLOW}[VERSION]${RESET}
   1.0
 ${YELLOW}[AUTHOR]${RESET}
-  @ZouariOmar <zouariomar20@gmail.com>
+  ZouariOmar <zouariomar20@gmail.com>
 ${YELLOW}[CREATED]${RESET}
   01/11/2025
 ${YELLOW}[CHANGELOG]${RESET}
-  1.0"
-  exit ${EXIT_SUCCESS}
+  347d7d6"
+  exit 0
 }
 
+# -----------------------------------------
+# .FUNCTION
+#   usage
+# .SYNOPSIS
+#   Display concise usage instructions
+# .DESCRIPTION
+#   Prints a short one-liner showing how to run the script and its options.
+# .AUTHOR
+#   @ZouariOmar (zouariomar20@gmail.com)
+# .CREATED
+#   2025-11-01
+# -----------------------------------------
 usage() {
   if [ ! -z "$1" ]; then
     echo -e "$1"
   fi
-  echo -e "${BLUE}[INFO]Try './run --help' for more information.${RESET}"
+  echo -e "${BLUE}[INFO]${RESET} Try './run --help' for more information."
 }
 
 if [[ $# -lt 1 ]]; then
-  usage "${RED}[ERROR] run: you must specify the option with there args.${RESET}"
+  usage "${RED}[ERROR]${RESET} Must specify command!"
   exit 1
 fi
 
