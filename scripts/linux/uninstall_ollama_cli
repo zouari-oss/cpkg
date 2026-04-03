@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# =========================================
+# .FILE
+#   uninstall_olloma_cli
+#
+# .SYNOPSIS
+#   Overview of script
+#
+# .DESCRIPTION
+#   Brief description of script
+#
+# .PARAMETER parameter_name
+#   Description of parameter
+#
+# .INPUTS
+#   None
+#
+# .OUTPUTS
+#   None or e.g., /tmp/output.log
+#
+# .NOTES
+#   Version       : 1.0
+#   Author        : @ZouariOmar (zouariomar20@gmail.com)
+#   Created       : 2026-04-03
+#   Change Log    : 0.1
+#
+# .EXAMPLE
+#   sudo ./uninstall_ollama_cli
+# =========================================
+
+USER_HOME=$(getent passwd "${SUDO_USER:-$USER}" | cut -d: -f6)
+
+# Init bash colors
+[[ -s "$USER_HOME/.bash/.bash_colors" ]] && . "$USER_HOME/.bash/.bash_colors"
+
+echo -e "${BLUE}🤖 Ollama Uninstallation Script${RESET}"
+echo -e "${BLUE}-------------------------${RESET}"
+
+# Check if script is run with sudo
+if [ "$EUID" -ne 0 ]; then
+  echo -e "${RED}❌ This script requires root privileges.${RESET}"
+  echo -e "${YELLOW}Please run with sudo: sudo $0${RESET}"
+  exit 1
+fi
+
+# Check if Docker is running Ollama
+if docker ps -a | grep -q ollama; then
+  echo -e "${YELLOW}🐳 Found Docker container for Ollama. Stopping and removing...${RESET}"
+  if ! docker stop ollama 2>/dev/null; then
+    echo -e "${RED}⚠️ Failed to stop Ollama container - it may not exist${RESET}"
+  elif ! docker rm ollama 2>/dev/null; then
+    echo -e "${RED}⚠️ Failed to remove Ollama container - it may not exist${RESET}"
+  else
+    echo -e "${GREEN}✅ Docker cleanup completed.${RESET}"
+  fi
+fi
+
+# Check if Ollama is installed locally
+if command -v ollama &>/dev/null; then
+  echo -e "${YELLOW}🔍 Found local Ollama installation. Removing...${RESET}"
+
+  # Stop and disable service
+  echo -e "${YELLOW}⏹️  Stopping Ollama service...${RESET}"
+  systemctl stop ollama
+
+  echo -e "${YELLOW}🚫 Disabling Ollama service...${RESET}"
+  systemctl disable ollama
+
+  # Remove service file
+  echo -e "${YELLOW}🗑️  Removing service file...${RESET}"
+  rm -f /etc/systemd/system/ollama.service
+
+  # Delete binary
+  echo -e "${YELLOW}🗑️  Removing Ollama binary...${RESET}"
+  rm -f $(which ollama)
+
+  # Cleanup remaining files and user/group
+  echo -e "${YELLOW}🧹 Cleaning up remaining files and user/group...${RESET}"
+  rm -rf /usr/share/ollama
+  userdel ollama
+  groupdel ollama
+
+  echo -e "${GREEN}✅ Local Ollama installation removed.${RESET}"
+else
+  echo -e "${RED}❌ No local Ollama installation found.${RESET}"
+fi
+
+echo -e "${BLUE}-------------------------${RESET}"
+echo -e "${GREEN}✨ Ollama uninstallation completed!${RESET}"
