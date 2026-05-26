@@ -2,13 +2,14 @@
   "name": "Crun Stacks",
   "url": "https://github.com/zouari-oss/cpkg/raw/main/crun/crun_stacks.json",
   "description": "A package contain many starter projects",
-  "version": "1.0.1",
-  "size": "3.6 kB",
-  "lastUpdated": "2026-03-19",
+  "version": "1.1.0",
+  "size": "3.8 kB",
+  "lastUpdated": "2026-05-26",
   "languages": [
     "cx",
     "cxx",
     "java",
+    "go",
     "xml"
   ],
   "stacks": {
@@ -66,6 +67,13 @@
         "name": "java-project-env",
         "description": "Environment for making java project (with maven)",
         "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/java/java-project-env.zip"
+      }
+    ],
+    "go": [
+      {
+        "name": "go-project-env",
+        "description": "Environment for making go project (with go-blueprint)",
+        "url": "https://github.com/zouari-oss/cpkg/raw/main/templates/go/go-project-env.zip"
       }
     ],
     "git": [
